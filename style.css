@@ -1,0 +1,239 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Smythe", system-ui;
+}
+
+.header {
+  background-image: url("images/headImg.png");
+  background-size: cover;
+  color: #fff;
+  height: 25vh;
+  padding: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.header-internal {
+  padding: 0 0.5em;
+}
+
+h1 {
+  font-weight: 400;
+  font-size: 2.4375rem;
+  margin-bottom: 0.25em;
+}
+
+.header-para {
+  font-weight: 400;
+  font-size: 1.40125rem;
+}
+
+/* section */
+
+.section {
+  display: grid;
+  padding: 2em 1em;
+
+  border-bottom: 1px solid #d2d2d2;
+
+  /* gap: 3rem; */
+
+  grid-template-columns: auto 50% auto;
+  grid-template-rows: auto;
+  grid-template-areas: "emoji container btn";
+}
+
+.emoji {
+  grid-area: emoji;
+  font-size: 70px;
+}
+.section-detail {
+  grid-area: container;
+}
+
+.menu-btn {
+  grid-area: btn;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.section-detail-food-name {
+  font-size: 1.75rem;
+  font-weight: 400;
+  margin-bottom: 0.25em;
+}
+
+.section-detail-food-ingredients {
+  font-weight: 400;
+  color: #8b8b8b;
+  margin-bottom: 0.65em;
+  letter-spacing: 1px;
+}
+
+.section-detail-food-price {
+  font-weight: 400;
+  color: black;
+  font-size: 1.5rem;
+}
+
+.menu-btn,
+.modal-close-btn {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: 1.5px solid #dedede;
+  background-color: #fff;
+  font-size: 2rem;
+  font-weight: 200;
+  color: #3c3c3c;
+}
+
+/* bill order */
+
+.your-order {
+  font-weight: 400;
+  font-size: 1.75rem;
+  text-align: center;
+  margin-top: 1em;
+}
+
+.order-row {
+  display: flex;
+  align-items: center;
+}
+
+.order-row {
+  font-weight: 400;
+  font-size: 1.75rem;
+  padding: 1em 1em;
+}
+
+.order-remove {
+  margin-left: 1em;
+  font-size: 0.75rem;
+  color: #bbbbbb;
+  font-weight: 400;
+}
+
+.order-price {
+  margin-left: auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.order-remove {
+  cursor: pointer;
+}
+
+.order {
+  border-bottom: 2px solid #393333;
+  margin-bottom: 1em;
+}
+
+/* footer  */
+
+.total-price-container {
+  padding: 1em;
+}
+
+.total-price-wraper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.total-price-para {
+  font-weight: 400;
+  font-size: 1.75rem;
+  color: #0e0e0e;
+}
+
+.total-price-value {
+  margin-left: auto;
+
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: #0e0e0e;
+}
+
+.complete-order-btn,
+.modal-btn {
+  width: 100%;
+  background-color: #16db99;
+  height: 60px;
+  color: #fff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+/* modal */
+
+.modal {
+  display: none;
+  width: 95%;
+  max-width: 550px;
+  position: fixed;
+  margin: auto;
+  top: 30%;
+  left: 0;
+  right: 0;
+
+  text-align: center;
+  padding: 1em;
+  /* position: relative; */
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-head {
+  font-weight: 700;
+  font-size: 1.5rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-bottom: 1em;
+}
+
+.modal-input-name,
+.modal-input-number,
+.modal-input-cvv {
+  width: 100%;
+  height: 71.3px;
+  color: #757575;
+  margin-bottom: 0.5em;
+  border: 1.3px solid #757575;
+  font-size: 1.25rem;
+  padding: 1em;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+
+/* final msg */
+.final-msg {
+  color: #065f46;
+  background-color: #ecfdf5;
+  width: 95%;
+  padding: 1.5em;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 5em;
+}

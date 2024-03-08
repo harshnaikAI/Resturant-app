@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Smythe&display=swap"
+      rel="stylesheet"
+    />
+    <title>Resturant menu</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header container">
+      <div class="header-internal">
+        <h1>Jimmy's Diner</h1>
+        <p class="header-para">The best burgers and pizzas in town</p>
+      </div>
+    </header>
+    <main class="container" id="main"></main>
+    <div class="order hidden container" id="order">
+      <p class="your-order" id="your-order">Your order</p>
+
+      <!-- import form js -->
+    </div>
+    <div
+      class="total-price-container hidden container"
+      id="total-price-container"
+    >
+      <div class="total-price-wraper">
+        <p class="total-price-para">Total price:</p>
+        <p class="total-price-value" id="total-price-value">$</p>
+      </div>
+
+      <button class="complete-order-btn" id="complete-order-btn">
+        Complete order
+      </button>
+    </div>
+
+    <div class="modal" id="modal">
+      <p class="modal-head">Enter card details</p>
+      <form id="login-form">
+        <input
+          type="text"
+          placeholder="Enter your name"
+          class="modal-input-name"
+          id="modal-input-name"
+          required
+        />
+        <input
+          type="number"
+          placeholder="Enter card number"
+          class="modal-input-number"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Enter CVV"
+          class="modal-input-cvv"
+          required
+        />
+
+        <button type="submit" class="modal-btn" id="modal-btn">Pay</button>
+      </form>
+      <button class="modal-close-btn" id="modal-close-btn">X</button>
+    </div>
+
+    <div class="final-msg container hidden" id="final-msg"></div>
+
+    <script src="index.js" type="module"></script>
+  </body>
+</html>
