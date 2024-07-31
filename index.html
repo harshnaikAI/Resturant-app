@@ -31,35 +31,37 @@
       <section class="order-display hidden" id="order-display">
         <p>Thanks james! your order is on the way</p>
       </section>
-      <form id="form" class="form hidden">
-        <p class="form-title">Enter card details</p>
-        <input
-          placeholder="Enter your name"
-          id="name"
-          name="user-name"
-          type="text"
-          pattern="[A-Za-z]+"
-          required
-        />
-        <input
-          placeholder="Enter card number"
-          id="card-number"
-          name="card-number"
-          required
-          type="number"
-        />
-        <input
-          placeholder="Enter CVV"
-          id="cvv"
-          name="cvv"
-          type="text"
-          maxlength="3"
-          minlength="1"
-          required
-          pattern="[A-Za-z]{3}"
-        />
-        <button type="submit" class="btn" id="pay-btn">Pay</button>
-      </form>
+      <div id="modal-overlay" class="modal-overlay hidden">
+        <form id="form" class="form hidden" action="/login" method="post">
+          <p class="form-title">Enter card details</p>
+          <input
+            placeholder="Enter your name"
+            id="name"
+            name="user-name"
+            type="text"
+            pattern="[A-Za-z]+"
+            required
+          />
+          <input
+            placeholder="Enter card number"
+            id="card-number"
+            name="card-number"
+            required
+            type="number"
+          />
+          <input
+            placeholder="Enter CVV"
+            id="cvv"
+            name="cvv"
+            type="text"
+            maxlength="3"
+            minlength="1"
+            required
+            pattern="[A-Za-z0-9]+"
+          />
+          <button type="submit" class="btn" id="pay-btn">Pay</button>
+        </form>
+      </div>
     </div>
     <script src="index.js" type="module"></script>
   </body>

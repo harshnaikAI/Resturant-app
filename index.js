@@ -11,6 +11,7 @@ const cvvInputEl = document.getElementById("cvv");
 const formEl = document.getElementById("form");
 const orderBtnEl = document.getElementById("order-btn");
 const orderDisplayEl = document.getElementById("order-display");
+const modalOverlay = document.getElementById("modal-overlay");
 
 let itemArr = menuArray.map(() => 2);
 
@@ -39,13 +40,31 @@ document.addEventListener("click", function (e) {
     handleAddItemBtn(e.target.dataset.index);
   } else if (e.target.dataset.remove) {
     handleRemove(e.target.dataset.remove);
-  } else if (e.target.id === "pay-btn") {
-    e.preventDefault();
-    payBtn();
   } else if (e.target.id === "order-btn") {
     orderBtn();
   }
 });
+
+modalOverlay.addEventListener("click", function (e) {
+  if (e.target === modalOverlay) {
+    exitModal();
+  }
+});
+
+formEl.addEventListener("submit", function (e) {
+  e.preventDefault();
+  payBtn();
+});
+
+function exitModal() {
+  nameInputEl.value = "";
+  cardNumberInputEl.value = "";
+  cvvInputEl.value = "";
+  orderBtnEl.disabled = false;
+  orderBtnEl.style.cursor = "pointer";
+  formEl.classList.add("hidden");
+  modalOverlay.classList.add("hidden");
+}
 
 function payBtn() {
   finalMsgDisplay(nameInputEl.value);
@@ -56,9 +75,11 @@ function payBtn() {
   orderBtnEl.style.cursor = "pointer";
   formEl.classList.add("hidden");
   billEl.classList.add("hidden");
+  modalOverlay.classList.add("hidden");
 }
 
 function orderBtn() {
+  modalOverlay.classList.remove("hidden");
   formEl.classList.remove("hidden");
   orderBtnEl.disabled = true;
   orderBtnEl.style.cursor = "not-allowed";

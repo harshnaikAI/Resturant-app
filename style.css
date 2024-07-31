@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: "Smythe", system-ui;
+  user-select: none;
 }
 
 h1 {
@@ -194,4 +195,15 @@ main,
   font-size: 2rem;
   color: #065f46;
   text-align: center;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: auto;
+  z-index: 1000;
 }
