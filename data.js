@@ -20,4 +20,11 @@ export const menuArray = [
     emoji: "🍺",
     id: 2,
   },
+  {
+    name: "apple",
+    ingredients: ["grain, hops, yeast, water"],
+    price: 22,
+    emoji: "🍎",
+    id: 2,
+  },
 ];

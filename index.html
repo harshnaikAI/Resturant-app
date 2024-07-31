@@ -3,74 +3,98 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- Google fonts -->
+    <title>Returant app</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Smythe&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Smythe&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
       rel="stylesheet"
     />
-    <title>Resturant menu</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="header container">
-      <div class="header-internal">
-        <h1>Jimmy's Diner</h1>
-        <p class="header-para">The best burgers and pizzas in town</p>
-      </div>
-    </header>
-    <main class="container" id="main"></main>
-    <div class="order hidden container" id="order">
-      <p class="your-order" id="your-order">Your order</p>
-
-      <!-- import form js -->
-    </div>
-    <div
-      class="total-price-container hidden container"
-      id="total-price-container"
-    >
-      <div class="total-price-wraper">
-        <p class="total-price-para">Total price:</p>
-        <p class="total-price-value" id="total-price-value">$</p>
-      </div>
-
-      <button class="complete-order-btn" id="complete-order-btn">
-        Complete order
-      </button>
-    </div>
-
-    <div class="modal" id="modal">
-      <p class="modal-head">Enter card details</p>
-      <form id="login-form">
+    <div class="container">
+      <header class="header">
+        <h1 class="main-text">Jimmy’s Diner</h1>
+        <p class="main-sub-text">The best burgers and pizzas in town.</p>
+      </header>
+      <main id="main">
+        <section class="item-section">
+          <p class="item-emoji">🍕</p>
+          <div class="item-details">
+            <p class="item-name">pizzas</p>
+            <p class="item-description">pepperoni,mushrom,mozarella</p>
+            <p class="item-price">$14</p>
+          </div>
+          <div class="add-on-border" id="add-on-border">
+            <p class="add-on">+</p>
+          </div>
+        </section>
+        <section class="item-section">
+          <p class="item-emoji">🍕</p>
+          <div class="item-details">
+            <p class="item-name">pizzas</p>
+            <p class="item-description">pepperoni,mushrom,mozarella</p>
+            <p class="item-price">$14</p>
+          </div>
+          <div class="add-on-border" id="add-on-border">
+            <p class="add-on">+</p>
+          </div>
+        </section>
+        <section class="item-section">
+          <p class="item-emoji">🍕</p>
+          <div class="item-details">
+            <p class="item-name">pizzas</p>
+            <p class="item-description">pepperoni,mushrom,mozarella</p>
+            <p class="item-price">$14</p>
+          </div>
+          <div class="add-on-border" id="add-on-border">
+            <p class="add-on">+</p>
+          </div>
+        </section>
+      </main>
+      <footer class="bill hidden" id="bill">
+        <h2>Your order</h2>
+        <div class="bill-items" id="bill-items"></div>
+        <div class="final-total">
+          <span class="bill-item-name">Total-price</span
+          ><span class="bill-total final-display-bill">$0</span>
+        </div>
+        <button class="btn" id="order-btn">Complete order</button>
+      </footer>
+      <section class="order-display hidden" id="order-display">
+        <p>Thanks james! your order is on the way</p>
+      </section>
+      <form id="form" class="form hidden">
+        <p class="form-title">Enter card details</p>
         <input
-          type="text"
           placeholder="Enter your name"
-          class="modal-input-name"
-          id="modal-input-name"
-          required
-        />
-        <input
-          type="number"
-          placeholder="Enter card number"
-          class="modal-input-number"
-          required
-        />
-        <input
+          id="name"
+          name="user-name"
           type="text"
-          placeholder="Enter CVV"
-          class="modal-input-cvv"
+          pattern="[A-Za-z]+"
           required
         />
-
-        <button type="submit" class="modal-btn" id="modal-btn">Pay</button>
+        <input
+          placeholder="Enter card number"
+          id="card-number"
+          name="card-number"
+          required
+          type="number"
+        />
+        <input
+          placeholder="Enter CVV"
+          id="cvv"
+          name="cvv"
+          type="text"
+          maxlength="3"
+          minlength="1"
+          required
+          pattern="[A-Za-z]{3}"
+        />
+        <button type="submit" class="btn" id="pay-btn">Pay</button>
       </form>
-      <button class="modal-close-btn" id="modal-close-btn">X</button>
     </div>
-
-    <div class="final-msg container hidden" id="final-msg"></div>
-
     <script src="index.js" type="module"></script>
   </body>
 </html>

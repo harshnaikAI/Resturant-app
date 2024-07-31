@@ -1,261 +1,144 @@
-"use-strict";
-
 import { menuArray } from "./data.js";
-
-const menuBtnEl = document.getElementById("menu-btn");
-
-const orderMainDivEl = document.getElementById("order");
 
 const mainEl = document.getElementById("main");
 
-const modalEl = document.getElementById("modal");
+const billItems = document.getElementById("bill-items");
+const billEl = document.getElementById("bill");
+const finalDisplayBill = document.querySelector(".final-display-bill");
+const nameInputEl = document.getElementById("name");
+const cardNumberInputEl = document.getElementById("card-number");
+const cvvInputEl = document.getElementById("cvv");
+const formEl = document.getElementById("form");
+const orderBtnEl = document.getElementById("order-btn");
+const orderDisplayEl = document.getElementById("order-display");
 
-const modalCloseBtn = document.getElementById("modal-close-btn");
+let itemArr = menuArray.map(() => 2);
 
-const TotalPriceValue = document.getElementById("total-price-value");
+function render() {
+  return menuArray
+    .map(function (item) {
+      const { name, ingredients, id, price, emoji } = item;
 
-const loginForm = document.getElementById("login-form");
-
-const modalInputName = document.getElementById("modal-input-name");
-
-loginForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-  orderMainDivEl.classList.add("hidden");
-  TotalPriceContainer.classList.add("hidden");
-  finalMsg.classList.remove("hidden");
-  displayMsgForDuration(
-    ` Thanks, ${modalInputName.value}! Your order is on its way!`,
-    5000
-  );
-  modalEl.style.display = "none";
-
-  loginForm.reset();
-  resetTheMenu();
-});
-
-function displayMsgForDuration(msg, duration) {
-  finalMsg.textContent = msg;
-
-  setTimeout(function () {
-    finalMsgHide();
-  }, duration);
-}
-
-function resetTheMenu() {
-  let priceArray = [14, 12, 12];
-  menuArray.forEach((ele, index) => {
-    ele.price = priceArray[index];
-  });
-
-  const orderRows = document.getElementsByClassName("order-row");
-
-  const orderRowsArray = Array.from(orderRows);
-
-  orderRowsArray.forEach((row) => row.remove());
-
-  console.log(menuArray);
-}
-
-const TotalPriceContainer = document.getElementById("total-price-container");
-
-const CompleteOrderBtn = document.getElementById("complete-order-btn");
-
-const modalBtn = document.getElementById("modal-btn");
-
-const finalMsg = document.getElementById("final-msg");
-
-const newMenu = menuArray
-  .map(function (item) {
-    return `<section class="section">
-    <div class='emoji'>${item.emoji}</div>
-  <div class="section-detail">
-    <p class="section-detail-food-name">${item.name}</p>
-    <p class="section-detail-food-ingredients">
-      ${item.ingredients.join(", ")}
-    </p>
-    <p class="section-detail-food-price">$${item.price}</p>
-  </div>
-  <button class="menu-btn" id=${item.id}>+</button>
-  </section>`;
-  })
-  .join("");
-
-mainEl.innerHTML = newMenu;
-
-function finalMsgHide() {
-  finalMsg.classList.add("hidden");
+      return `<section class="item-section">
+                <p class="item-emoji">${emoji}</p>
+                <div class="item-details">
+                    <p class="item-name">${name}</p>
+                    <p class="item-description">${ingredients}</p>
+                    <p class="item-price">$${price}</p>
+                </div>
+                <div class="add-on-border" data-index="${id}">
+               +
+                </div>
+            </section>`;
+    })
+    .join("");
 }
 
 document.addEventListener("click", function (e) {
-  let obj = "";
-
-  let incrementOfItem;
-  console.log(typeof e.target.id);
-  if (parseInt(e.target.id) === 0) {
-    obj = getObject(e.target.id);
-
-    if (obj[0].price === 0) {
-      obj[0].price = 14;
-    }
-
-    incrementOfItem = 14;
-    finalMsgHide();
-  } else if (parseInt(e.target.id) === 1) {
-    obj = getObject(e.target.id);
-
-    if (obj[0].price === 0) {
-      obj[0].price = 12;
-    }
-
-    incrementOfItem = 12;
-    finalMsgHide();
-  } else if (parseInt(e.target.id) === 2) {
-    obj = getObject(e.target.id);
-
-    if (obj[0].price === 0) {
-      obj[0].price = 12;
-    }
-
-    incrementOfItem = 12;
-    finalMsgHide();
+  if (e.target.dataset.index) {
+    handleAddItemBtn(e.target.dataset.index);
   } else if (e.target.dataset.remove) {
-    let removeObj = getObject(e.target.dataset.remove);
-
-    incrementOfItem = removeObj[0].price;
-
-    handleRemoveClick(removeObj[0], incrementOfItem);
-  }
-
-  if (obj) {
-    renderObj(obj[0], incrementOfItem);
-  }
-
-  giveTotalPrice();
-
-  if (e.target.id === "complete-order-btn") {
-    console.log(e.target.id);
-    openModal();
-  }
-
-  if (e.target.id === "modal-close-btn") {
-    closeModal();
+    handleRemove(e.target.dataset.remove);
+  } else if (e.target.id === "pay-btn") {
+    e.preventDefault();
+    payBtn();
+  } else if (e.target.id === "order-btn") {
+    orderBtn();
   }
 });
 
-function closeModal() {
-  modalEl.style.display = "none";
+function payBtn() {
+  finalMsgDisplay(nameInputEl.value);
+  nameInputEl.value = "";
+  cardNumberInputEl.value = "";
+  cvvInputEl.value = "";
+  orderBtnEl.disabled = false;
+  orderBtnEl.style.cursor = "pointer";
+  formEl.classList.add("hidden");
+  billEl.classList.add("hidden");
 }
 
-function openModal() {
-  modalEl.style.display = "inline";
+function orderBtn() {
+  formEl.classList.remove("hidden");
+  orderBtnEl.disabled = true;
+  orderBtnEl.style.cursor = "not-allowed";
 }
 
-function giveTotalPrice() {
-  let total = 0;
-  const totalPrice = [...document.getElementsByClassName("order-price")];
+function handleAddItemBtn(itemId) {
+  billEl.classList.remove("hidden");
 
-  console.log(totalPrice);
-
-  totalPrice.forEach((element) => {
-    const priceText = element.textContent;
-
-    const numericValue = parseFloat(priceText.replace("$", ""));
-
-    total += numericValue;
-  });
-  console.log(total);
-  TotalPriceValue.textContent = "$" + total;
-
-  if (total === 0) {
-    orderMainDivEl.classList.add("hidden");
-    TotalPriceContainer.classList.add("hidden");
-  }
+  renderFooter(itemId);
 }
 
-function handleRemoveClick(item, increment) {
-  console.log(item.price);
-  if (item.price !== 0) {
-    console.log(item);
-
-    console.log(increment);
-
-    item.price -= increment;
-
-    const specificPriceElements = document.querySelector(
-      `[data-price="${item.id}"]`
-    );
-
-    specificPriceElements.textContent = "$" + item.price;
-
-    specificPriceElements.parentElement.remove();
-  }
+function getObject(itemId) {
+  return menuArray.filter(function (item) {
+    return item.id === Number(itemId);
+  })[0];
 }
 
-function getObject(eleId) {
-  return menuArray.filter(function (ele) {
-    return ele.id === parseInt(eleId);
-  });
+function finalMsgDisplay(name) {
+  orderDisplayEl.classList.remove("hidden");
+  orderDisplayEl.innerHTML = `<p>Thanks ${name}! your order is on the way</p>`;
+
+  setTimeout(() => {
+    orderDisplayEl.innerHTML = "";
+    orderDisplayEl.classList.add("hidden");
+  }, 3000);
+
+  resetItemList();
 }
 
-function renderObj(item, increment) {
-  const ola = document.getElementsByClassName(`${item.name}`);
+function resetItemList() {
+  const allBill = document.querySelector(".bill-items");
+  allBill.innerHTML = "";
+}
 
-  console.log(ola);
+function renderFooter(itemId) {
+  const obj = getObject(itemId);
+  let renderFoot = "";
 
-  const olaArray = Array.from(ola);
+  const { name, ingredients, id, price, emoji } = obj;
 
-  console.log(olaArray);
+  if (document.querySelector(`.bill-item[data-index="${id}"]`)) {
+    const oldPara = document.querySelector(`.bill-item[data-index="${id}"]`);
 
-  const includesItem = olaArray.some(
-    (element) => element.textContent === item.name
-  );
-
-  console.log(includesItem);
-  const paraOrderPriceEl = document.createElement("p");
-  const orderDivInnerEl = document.createElement("div");
-  const paraOrderNameEl = document.createElement("p");
-  const paraOrderRemoveEl = document.createElement("p");
-
-  const specificPriceElements = document.querySelector(
-    `[data-price="${item.id}"]`
-  );
-
-  if (!includesItem) {
-    orderMainDivEl.classList.remove("hidden");
-    TotalPriceContainer.classList.remove("hidden");
-    console.log(item);
-
-    // single obj render
-
-    orderDivInnerEl.classList.add("order-row");
-
-    paraOrderNameEl.classList.add("order-name", item.name);
-
-    paraOrderNameEl.setAttribute("data-name", item.id);
-
-    paraOrderNameEl.textContent = `${item.name}`;
-
-    paraOrderRemoveEl.classList.add("order-remove");
-    paraOrderRemoveEl.setAttribute("data-remove", item.id);
-    paraOrderRemoveEl.textContent = `remove`;
-
-    paraOrderPriceEl.classList.add("order-price");
-    paraOrderPriceEl.setAttribute("data-price", item.id);
-    paraOrderPriceEl.textContent = `$${item.price}`;
-
-    orderDivInnerEl.appendChild(paraOrderNameEl);
-    orderDivInnerEl.appendChild(paraOrderRemoveEl);
-    orderDivInnerEl.appendChild(paraOrderPriceEl);
-
-    orderMainDivEl.appendChild(orderDivInnerEl);
+    oldPara.innerHTML = ` <span class="bill-item-name">${name}</span><span      class="bill-item-remove" data-remove='${id}'>remove</span><span class="bill-total cal-bill">$${
+      price * itemArr[id]
+    }</span>
+                    `;
+    itemArr[id] = ++itemArr[id];
   } else {
-    // Update the price
-    item.price += increment;
+    renderFoot = ` 
+        <p class="bill-item" data-index='${id}'> 
+         <span class="bill-item-name">${name}</span>
+         <span class="bill-item-remove" data-remove='${id}'>remove</span>
+         <span class="bill-total cal-bill">$${price}</span>
+      </p>`;
+    billItems.innerHTML += renderFoot;
+  }
 
-    console.log(item);
+  totalBillDisplay();
+}
 
-    console.log(specificPriceElements);
+function totalBillDisplay() {
+  const allBill = document.querySelectorAll(".cal-bill");
 
-    specificPriceElements.textContent = "$" + item.price;
+  if (allBill.length > 0) {
+    let totalPrice = 0;
+    for (const bill of allBill) {
+      totalPrice += Number(bill.textContent.replace("$", ""));
+      finalDisplayBill.textContent = "$" + totalPrice;
+    }
+  } else {
+    billEl.classList.add("hidden");
   }
 }
+
+function handleRemove(itemId) {
+  document
+    .querySelector(`.bill-item-remove[data-remove='${itemId}']`)
+    .parentElement.remove();
+  totalBillDisplay();
+}
+
+mainEl.innerHTML = render();
